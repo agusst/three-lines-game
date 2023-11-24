@@ -4,5 +4,6 @@
 	"build": {
 		"dockerfile": "Dockerfile"
 	},
-  "remoteUser": "node"
+	"appPort": 3000,
+	"remoteUser": "node"
 }
