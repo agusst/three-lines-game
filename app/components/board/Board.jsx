@@ -33,10 +33,13 @@ export default function Board({ isX, squares, onPlay, onReset }) {
 
   const isResetEnable = winner || isBoardFull;
   return (
-    <>
+    <div>
+      <Typography variant="h5" color="blue" className="mb-2">
+        Tablero
+      </Typography>
       <Card className="w-96">
         <CardBody>
-          <Typography variant="h5" color="blue-gray" className="mb-6">
+          <Typography variant="paragraph" color="blue-gray" className="mb-6">
             {label}
           </Typography>
           <div className='flex flex-col items-center'>
@@ -61,6 +64,6 @@ export default function Board({ isX, squares, onPlay, onReset }) {
           <ResetButton onClick={onReset} isDisable={!isResetEnable}></ResetButton>
         </CardFooter>
       </Card>
-    </>
+    </div>
   )
 }
