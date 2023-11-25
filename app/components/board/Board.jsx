@@ -1,6 +1,6 @@
 'use client';
 import './board.css';
-import Square from '../square/square';
+import Square from '../square/Square';
 import { calculateWinner } from '../utils';
 import {
   Card,
