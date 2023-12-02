@@ -20,7 +20,7 @@ export default function Home() {
     setIsX(index % 2 === 0);
   }
   return (
-    <main className="flex min-h-screen justify-center gap-4 items-center p-24">
+    <main className="flex justify-center gap-8 items-center p-24 flex-col md:flex-row">
       <Board isX={isX} squares={currentSquares} onPlay={handleOnPlay} onReset={handleOnReset} />
       <History history={history} onClick={handleOnJump} />
     </main>

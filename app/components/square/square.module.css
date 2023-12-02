@@ -1,0 +1,14 @@
+.square {
+  font-size: 32px;
+  font-weight: bold;
+  height: 50px;
+  width: 50px;
+  margin: 0;
+  padding: 0;
+}
+
+.plus {
+  width: 58px;
+}
+
+.highlight {}

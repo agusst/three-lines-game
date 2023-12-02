@@ -1,6 +1,6 @@
 'use client';
-import './board.css';
-import Square from '../square/square';
+import './board.module.css';
+import Square from '../square/Square';
 import { calculateWinner } from '../utils';
 import {
   Card,
@@ -13,55 +13,59 @@ import Row from './row/Row';
 
 export default function Board({ isX, squares, onPlay, onReset }) {
 
+  const { winner, combination } = calculateWinner(squares);
+
   const handleOnClick = (index) => {
-    if (squares[index] || calculateWinner(squares)) {
+    if (squares[index] || winner) {
       return;
     }
     const copy = squares.slice();
     copy[index] = isX ? 'X' : 'O';
     onPlay(copy)
   }
-  const winner = calculateWinner(squares);
   const isBoardFull = !squares.filter(square => !square).length;
   let label = '';
   if (winner) {
-    label = `El ganador es: ${winner}`;
+    label = `El ganador es ${winner}`;
   } else if (isBoardFull) {
-    label = 'Fin del juego';
+    label = 'Empate';
   } else {
-    label = `Turno de: ${isX ? 'X' : 'O'}`
+    label = `Turno de ${isX ? 'X' : 'O'}`
   }
 
   const isResetEnable = winner || isBoardFull;
 
-
-
   return (
     <div>
-      <Typography variant="h5" color="blue" className="mb-2">
+      <Typography variant="h5" color="indigo" className="mb-2">
+        <ResetButton onClick={onReset} isDisable={!isResetEnable}></ResetButton>
         Tablero
       </Typography>
-      <Card className="w-96">
+      <Card className="w-72 pb-6">
         <CardBody>
-          <Typography variant="paragraph" color="blue-gray" className="mb-6">
-            {label}
-          </Typography>
+          <div>
+            <Typography variant="paragraph" color="gray" className="mb-6 text-center font-bold">
+              {label}
+            </Typography>
+          </div>
           <div className='flex flex-col items-center'>
             {
-              [0, 1, 2].map((square, row) => {
-                const index = row * 3;
+              [0, 1, 2].map((i, row) => {
                 return (
-                  <Row key={row}>
-                    {(col) => <Square key={index + col} value={squares[index + col]} onClick={() => handleOnClick(index + col)} />}
+                  <Row key={row} showBorder={i === 1}>
+                    {
+                      (col) => {
+                        const index = row * 3 + col;
+                        const highlight = combination?.includes(index);
+                        return <Square key={index} value={squares[index]} onClick={() => handleOnClick(index)} showBorder={col === 1} highlight={highlight} />
+                      }
+                    }
                   </Row>
                 )
               })
             }
           </div>
         </CardBody>
-        <CardFooter className='flex flex-row-reverse pt-0'>
-          <ResetButton onClick={onReset} isDisable={!isResetEnable}></ResetButton>
-        </CardFooter>
       </Card>
     </div>
   )
